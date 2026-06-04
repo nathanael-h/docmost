@@ -14,7 +14,7 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { userAtom } from "@/features/user/atoms/current-user-atom.ts";
 import { CustomAvatar } from "@/components/ui/custom-avatar.tsx";
 import { PageVerificationBadge } from "@/ee/page-verification";
@@ -25,7 +25,8 @@ import { PageEditMode } from "@/features/user/types/user.types.ts";
 import { useAsideTriggerProps } from "@/hooks/use-toggle-aside.tsx";
 import { DeletedPageBanner } from "@/features/page/trash/components/deleted-page-banner.tsx";
 import clsx from "clsx";
-import { currentPageEditModeAtom } from "@/features/editor/atoms/editor-atoms.ts";
+import { currentPageEditModeAtom, pageEditorAtom } from "@/features/editor/atoms/editor-atoms.ts";
+import { MarkdownEditor } from "@/features/editor/components/markdown-editor/markdown-editor";
 
 const MemoizedTitleEditor = React.memo(TitleEditor);
 const MemoizedPageEditor = React.memo(PageEditor);
@@ -75,6 +76,8 @@ export function FullEditor({
   const userPageEditMode =
     user.settings?.preferences?.pageEditMode ?? PageEditMode.Edit;
   const isEditMode = currentPageEditMode === PageEditMode.Edit;
+  const isMarkdownMode = currentPageEditMode === PageEditMode.Markdown;
+  const pageEditor = useAtomValue(pageEditorAtom);
 
   // Apply the user's saved preference only once on initial load, not on every
   // page navigation — so the mode sticks across navigations within a session.
@@ -107,12 +110,17 @@ export function FullEditor({
         contributors={contributors}
         readOnly={!editable}
       />
-      <MemoizedPageEditor
-        pageId={pageId}
-        editable={editable}
-        content={content}
-        canComment={canComment}
-      />
+      <div style={{ display: isMarkdownMode ? "none" : "block" }}>
+        <MemoizedPageEditor
+          pageId={pageId}
+          editable={editable}
+          content={content}
+          canComment={canComment}
+        />
+      </div>
+      {isMarkdownMode && (
+        <MarkdownEditor editor={pageEditor} editable={editable} />
+      )}
     </Container>
   );
 }

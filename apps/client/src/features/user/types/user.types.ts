@@ -52,4 +52,5 @@ export interface IUserSettings {
 export enum PageEditMode {
   Read = "read",
   Edit = "edit",
+  Markdown = "markdown",
 }

@@ -89,6 +89,7 @@ export function PageEditModeToggle({ size }: { size?: MantineSize }) {
       data={[
         { label: t("Edit"), value: PageEditMode.Edit },
         { label: t("Read"), value: PageEditMode.Read },
+        { label: t("Markdown"), value: PageEditMode.Markdown },
       ]}
     />
   );
