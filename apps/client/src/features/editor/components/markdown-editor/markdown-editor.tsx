@@ -5,6 +5,7 @@ import { Fragment, Node as ProsemirrorNode, Slice } from "@tiptap/pm/model";
 import type { Transaction } from "@tiptap/pm/state";
 import { htmlToMarkdown, markdownToHtml } from "@docmost/editor-ext";
 import { mainExtensions } from "@/features/editor/extensions/extensions";
+import classes from "./markdown-editor.module.css";
 
 // Tags transactions that originate from this markdown editor so the inbound
 // reconcile loop can skip its own echoes (and avoid feedback loops).
@@ -294,6 +295,7 @@ export function MarkdownEditor({ editor, editable }: MarkdownEditorProps) {
       readOnly={!editable}
       autosize
       minRows={20}
+      classNames={{ input: classes.input }}
       styles={{
         input: {
           fontFamily: "monospace",
@@ -301,7 +303,6 @@ export function MarkdownEditor({ editor, editable }: MarkdownEditorProps) {
           lineHeight: 1.6,
           border: "none",
           resize: "none",
-          padding: 0,
           background: "transparent",
         },
         wrapper: { width: "100%" },
