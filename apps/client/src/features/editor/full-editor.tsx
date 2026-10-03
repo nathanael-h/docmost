@@ -76,8 +76,11 @@ export function FullEditor({
   );
   const userPageEditMode =
     user.settings?.preferences?.pageEditMode ?? PageEditMode.Edit;
+  const markdownEditorEnabled =
+    user.settings?.preferences?.markdownEditor ?? false;
   const isEditMode = currentPageEditMode === PageEditMode.Edit;
-  const isMarkdownMode = currentPageEditMode === PageEditMode.Markdown;
+  const isMarkdownMode =
+    markdownEditorEnabled && currentPageEditMode === PageEditMode.Markdown;
   const pageEditor = useAtomValue(pageEditorAtom);
 
   // Apply the user's saved preference only once on initial load, not on every
@@ -88,6 +91,17 @@ export function FullEditor({
       defaultEditModeApplied = true;
     }
   }, [userPageEditMode, setCurrentPageEditMode]);
+
+  // Opting out of the experimental markdown editor while in markdown mode
+  // returns to the rich editor.
+  useEffect(() => {
+    if (
+      !markdownEditorEnabled &&
+      currentPageEditMode === PageEditMode.Markdown
+    ) {
+      setCurrentPageEditMode(PageEditMode.Edit);
+    }
+  }, [markdownEditorEnabled, currentPageEditMode, setCurrentPageEditMode]);
 
   return (
     <Container

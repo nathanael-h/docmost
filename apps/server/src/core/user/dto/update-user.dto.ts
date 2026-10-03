@@ -27,6 +27,10 @@ export class UpdateUserDto extends PartialType(
   editorToolbar: boolean;
 
   @IsOptional()
+  @IsBoolean()
+  markdownEditor: boolean;
+
+  @IsOptional()
   @IsString()
   locale: string;
 

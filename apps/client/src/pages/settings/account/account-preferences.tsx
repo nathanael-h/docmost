@@ -4,6 +4,7 @@ import AccountTheme from "@/features/user/components/account-theme.tsx";
 import PageWidthPref from "@/features/user/components/page-width-pref.tsx";
 import PageEditPref from "@/features/user/components/page-state-pref";
 import FixedToolbarPref from "@/features/user/components/fixed-toolbar-pref";
+import MarkdownEditorPref from "@/features/user/components/markdown-editor-pref";
 import NotificationPref from "@/features/user/components/notification-pref";
 import { Divider } from "@mantine/core";
 import { useTranslation } from "react-i18next";
@@ -34,6 +35,10 @@ export default function AccountPreferences() {
       <Divider my={"md"} />
 
       <FixedToolbarPref />
+
+      <Divider my={"md"} />
+
+      <MarkdownEditorPref />
 
       <Divider my={"md"} />
 

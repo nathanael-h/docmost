@@ -77,9 +77,12 @@ export function PageStateSegmentedControl({
 // the preference to the server.
 export function PageEditModeToggle({ size }: { size?: MantineSize }) {
   const { t } = useTranslation();
+  const [user] = useAtom(userAtom);
   const [currentPageEditMode, setCurrentPageEditMode] = useAtom(
     currentPageEditModeAtom,
   );
+  const markdownEditorEnabled =
+    user?.settings?.preferences?.markdownEditor ?? false;
 
   return (
     <SegmentedControl
@@ -89,7 +92,9 @@ export function PageEditModeToggle({ size }: { size?: MantineSize }) {
       data={[
         { label: t("Edit"), value: PageEditMode.Edit },
         { label: t("Read"), value: PageEditMode.Read },
-        { label: t("Markdown"), value: PageEditMode.Markdown },
+        ...(markdownEditorEnabled
+          ? [{ label: t("Markdown"), value: PageEditMode.Markdown }]
+          : []),
       ]}
     />
   );

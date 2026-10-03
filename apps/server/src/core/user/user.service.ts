@@ -69,6 +69,14 @@ export class UserService {
       );
     }
 
+    if (typeof updateUserDto.markdownEditor !== 'undefined') {
+      return this.userRepo.updatePreference(
+        userId,
+        'markdownEditor',
+        updateUserDto.markdownEditor,
+      );
+    }
+
     const notificationSettings: Record<string, NotificationSettingKey> = {
       notificationPageUpdates: 'page.updated',
       notificationPageUserMention: 'page.userMention',
